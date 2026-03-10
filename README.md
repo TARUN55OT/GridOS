@@ -9,7 +9,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-teal.svg)](https://fastapi.tiangolo.com/)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 
-**GridOS** is a vendor-neutral, open-source middleware platform that unifies **Distributed Energy Resources (DERs)** — solar inverters, batteries, EV chargers, smart loads — behind a single, standards-based API. It provides real-time telemetry ingestion, digital-twin simulation, ML-driven forecasting, and optimal energy dispatch, enabling utilities, aggregators, and microgrid operators to accelerate the energy transition.
+**GridOS** aims to be a vendor-neutral, open-source middleware platform that unifies **Distributed Energy Resources (DERs)** — solar inverters, batteries, EV chargers, smart loads — behind a single, standards-based API. It provides real-time telemetry ingestion, digital-twin simulation, ML-driven forecasting, and optimal energy dispatch, enabling utilities, aggregators, and microgrid operators to accelerate the energy transition.
 
 ---
 
@@ -190,7 +190,7 @@ Explore the interactive Jupyter notebooks in `notebooks/`:
 
 ## Contributing
 
-We welcome contributions from the community. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
+We welcome contributions from the Grid Digitization community. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
 
 ---
 
